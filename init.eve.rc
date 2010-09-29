@@ -1,0 +1,121 @@
+#This file is parsed after init.rc
+
+on boot
+# setup the global environment
+    #export PATH /sbin:/system/sbin:/system/bin:/system/xbin:/usr/bin
+
+# create mountpoints and mount tmpfs on sqlite_stmt_journals
+## hopemini@lge.com, 2008-07-16
+	symlink /sqlite_stmt_journals /tmp
+	#mkdir /usr
+	#mkdir /usr/bin
+	#symlink /sbin/lrz /usr/bin/rz
+	#symlink /sbin/lsz /usr/bin/sz
+	#mkdir /data/test_results 01777 shell shell
+
+    mkdir /data/misc/wifi 0770 wifi wifi
+	mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+
+    setprop wifi.supplicant_scan_interval 20
+    setprop wifi.interface wlan0
+	
+    chown system system /sys/class/backlight/ct810-bl/brightness
+	chown system system /sys/class/backlight/adam-bl/brightness
+	chown system system /sys/class/backlight/adam-bl/alc_mode
+	chown system system /dev/smd0
+	chown system system /sys/devices/platform/folder/state
+	chown system system /dev/amp
+	chmod 0666 /dev/amp
+	chown system system /dev/cam
+	chmod 0666 /dev/cam
+	chmod 0666 /data/misc/ts_cal
+	chmod 0666 /dev/bma150
+	
+    chmod 0666 /sys/class/rfkill/rfkill0/type
+	chmod 0666 /sys/class/rfkill/rfkill0/state
+	chmod 0666 /dev/ttyHS0
+	chown bluetooth bluetooth /dev/ttyHS0
+
+	chmod 0666 /sys/devices/platform/android-vibrator/enable
+	chmod 0666 /sys/devices/platform/android-vibrator/amp
+	
+    #Auto adjust tcp window
+    write /proc/sys/net/ipv4/tcp_adv_win_scale  1
+
+    #Somehow this is not handled by uevents
+    exec /sbin/mknod /dev/msm_camera0 c 246 0
+    chown system camera /dev/msm_camera0
+    chmod 0666 /dev/msm_camera
+	chmod 0666 /dev/mv9319_sony_5m
+
+    # check and upgrade Camera ISP Firmware
+    write /sys/devices/platform/i2c-gpio.3/i2c-adapter/i2c-3/3-0028/firmware 1
+    write /dev/msm_camera0 0
+
+    chmod 0666 /sys/devices/platform/android-keyled/setting
+    chmod 0666 /sys/devices/platform/android-keyled/shift
+    chmod 0666 /sys/devices/platform/android-keyled/enable
+        
+    chmod 0666 /sys/devices/platform/msm_hsusb_periphera/composition
+
+# LGE_CHANGE, [munyoung@lge.com] Disable fbcon cursor blink for fix BT sound break on sleep
+	write /sys/devices/virtual/graphics/fbcon/cursor_blink 0
+        
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu0/cpufreq/ondemand/sampling_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 245760
+
+    #This device enables the proximity sensor
+    chown system system /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable
+    chmod 0666 /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable
+
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown system system /sys/module/sco/parameters/disable_esco
+    chmod 0666 /sys/module/bluetooth_power/parameters/power
+    chmod 0666 /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0666 /sys/class/rfkill/rfkill0/type
+    chmod 0666 /sys/class/rfkill/rfkill0/state
+    chmod 0666 /dev/ttyHS0
+
+    chmod 0666 /dev/msm_snd
+
+    #Enable sdcc polling -> fixes wifi hangs after resume
+    write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.1/polling 1
+    write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.2/polling 1
+    write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.3/polling 1
+    write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.4/polling 1
+
+    # The compass device
+    chown system system /dev/akm8973_daemon
+    chown system system /dev/akm8973_aot
+    chmod 0666 /dev/akm8973_daemon
+    chmod 0666 /dev/akm8973_aot
+
+    chmod 0666  /sys/module/pm/parameters/boot_complete
+    chown radio system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+
+    #Checkgapps and choosesystem
+    exec /sbin/umount /system
+    mount vfat /dev/block/mmcblk0p1 /sdcard dirsync nosuid nodev noexec uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8
+    chown system system /sdcard
+    chmod 0077 /sdcard
+    exec /sbin/logwrapper /sbin/sh /sbin/choosesystem
+    #If we do not boot from sdcard, try to unmount it, so it can be handled by vold
+    exec /sbin/umount /sdcard
+
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -dd
+	user wifi
+    group wifi inet keystore
+    disabled
+	oneshot
+
+service dhcpcd /system/bin/dhcpcd -BKL wlan0
+	disabled
+	oneshot
+
+service akmd2 /system/bin/akmd2

@@ -1,0 +1,19 @@
+#this script is called from init.rc
+TAG=checkgapps
+ARC=/sdcard/optedgapps-ds-ere36b.zip
+
+if [[ -e /system/app/gtalkservice.apk ]]; then
+  echo "$TAG: Google apps are already installed"
+else
+  echo "$TAG: Looking for $ARC"
+  mount vfat /dev/block/mmcblk0p1 /sdcard dirsync nosuid nodev noexec uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8
+  chown system system /sdcard
+  chmod 0077 /sdcard
+  if [[ -e $ARC ]]; then
+    echo -n "$TAG: Found $ARC, extracting ... "
+    unzip $ARC -x 'META-INF*' -d / && echo "successful" || echo "failed"
+    #This one does not work, use the one from market
+    rm /system/app/VoiceSearch.apk
+  fi
+  umount /sdcard
+fi

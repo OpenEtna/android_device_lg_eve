@@ -1,0 +1,12 @@
+echo "Looking for /sdcard/system.ext2.img"
+if [[ -e /sdcard/system.ext2.img ]]; then
+  #echo -n "Mounting /sdcard/system.ext2.img on /dev/block/loop0 ... "
+  #losetup /dev/block/loop0 /sdcard/system.img && echo "successful " || echo "failed "
+  #echo -n "Mounting /dev/block/loop0 at /system ... "
+  #mount -o rw /dev/block/loop0 /system && echo "successful" || (losetup -d /dev/block/loop0; echo "failed")
+  echo -n "Mounting /sdcard/system.ext2.img on /system ... "
+  mount -o rw /sdcard/system.ext2.img /system && echo "successful" || echo "failed"
+fi
+
+#Check if /system was mounted, else mount from nand
+mount | grep /system > /dev/null || (echo "Mounting /system from nand ... "; mount -t yaffs2 /dev/block/mtdblock3 /system)
