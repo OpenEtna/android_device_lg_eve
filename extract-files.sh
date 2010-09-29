@@ -7,7 +7,7 @@ FILES="lib/libcommondefs.so lib/libgps.so lib/libloc_api-rpc.so lib/libloc_api.s
 #Compass
 FILES="$FILES bin/akmd2"
 #Camera
-FILES="lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
+FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
 #Video
 FILES="$FILES lib/libmm-adspsvc.so lib/libOmxH264Dec.so lib/libOmxMpeg4Dec.so lib/libOmxVidEnc.so"
 FILES="$FILES lib/libomx_wmadec_sharedlibrary.so lib/libomx_wmvdec_sharedlibrary.so"
