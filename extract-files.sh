@@ -9,7 +9,7 @@ FILES="$FILES bin/akmd2"
 #Camera
 FILES="lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
 #Video
-FILES="$FILES lib/libmm-adspsvc.so lib/libOmxH264Dec.so lib/libOmxMpeg4Dec.so lib/libOmxVidEnc.so lib/libspeech.so"
+FILES="$FILES lib/libmm-adspsvc.so lib/libOmxH264Dec.so lib/libOmxMpeg4Dec.so lib/libOmxVidEnc.so"
 FILES="$FILES lib/libomx_wmadec_sharedlibrary.so lib/libomx_wmvdec_sharedlibrary.so"
 #FILES="$FILES lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so"
 #etc/pvasflocal.cfg
