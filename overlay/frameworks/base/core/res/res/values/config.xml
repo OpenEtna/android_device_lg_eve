@@ -85,4 +85,5 @@
     <!-- Don't download GPS XTRA data on boot, this can cause a radio panic -->
     <bool name="config_gps_xtra_download_on_boot">false</bool>
 
+    <bool name="config_batterySdCardAccessibility">true</bool>
 </resources>
