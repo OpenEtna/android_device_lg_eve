@@ -1,0 +1,8 @@
+echo "Looking for /sdcard/system.ext2.img"
+if busybox [[ -e /sdcard/system.ext2.img ]]; then
+  echo -n "Mounting /sdcard/system.ext2.img on /system ... "
+  busybox mount -o rw /sdcard/system.ext2.img /system && echo "successful" || echo "failed"
+fi
+
+#Check if /system was mounted, else mount from nand
+busybox mount | busybox grep /system > /dev/null || (echo "Mounting /system from nand ... "; busybox mount -t yaffs2 /dev/block/mtdblock3 /system)

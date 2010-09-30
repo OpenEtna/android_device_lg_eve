@@ -52,17 +52,17 @@ $(file): $(TARGET_PREBUILT_KERNEL) | $(ACP)
 #	$(transform-prebuilt-to-target)
 
 file := $(TARGET_ROOT_OUT)/init.eve.rc
-$(file) : $(LOCAL_PATH)/init.eve.rc | $(ACP)
+$(file) : $(LOCAL_PATH)/prebuilt/init.eve.rc | $(ACP)
 	$(transform-prebuilt-to-target)
 ALL_PREBUILT += $(file)
 
 file := $(TARGET_ROOT_OUT_SBIN)/choosesystem
-$(file) : $(LOCAL_PATH)/choosesystem | $(ACP)
+$(file) : $(LOCAL_PATH)/prebuilt/choosesystem | $(ACP)
 	$(transform-prebuilt-to-target)
 ALL_PREBUILT += $(file)
 
 file := $(TARGET_ROOT_OUT)/initlogo.rle
-$(file) : $(LOCAL_PATH)/initlogo.rle | $(ACP)
+$(file) : $(LOCAL_PATH)/prebuilt/initlogo.rle | $(ACP)
 	$(transform-prebuilt-to-target)
 ALL_PREBUILT += $(file)
 
@@ -151,13 +151,7 @@ ALL_PREBUILT += $(file)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE := vold.conf
-LOCAL_SRC_FILES := $(LOCAL_MODULE)
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE := gps.conf
+LOCAL_MODULE := vold.fstab
 LOCAL_SRC_FILES := $(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
@@ -170,6 +164,14 @@ include $(BUILD_PREBUILT)
 #LOCAL_MODULE_CLASS := ETC
 #LOCAL_MODULE_PATH := $(local_target_dir)
 #LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE)
+#include $(BUILD_PREBUILT)
+
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := wireless.ko
+#LOCAL_MODULE_TAGS := user
+#LOCAL_MODULE_CLASS := ETC
+#LOCAL_MODULE_PATH := $(TARGET_OUT)/lib/modules
+#LOCAL_SRC_FILES := $(LOCAL_MODULE)
 #include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -246,7 +248,22 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
-	vendor/openetna/openetna/15checkgapps:system/etc/init.d/15checkgapps
+	device/lg/eve/prebuilt/15checkgapps:system/etc/init.d/15checkgapps \
+	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl-english \
+	device/lg/eve/prebuilt/eve_qwerty.kl-german:system/usr/keylayout/eve_qwerty.kl-german \
+	device/lg/eve/prebuilt/eve_qwerty.kl-french:system/usr/keylayout/eve_qwerty.kl-french
+
+#Radio
+PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so \
+               lib/libnv.so lib/libwmsts.so lib/liblgeat.so lib/libril_log.so lib/liblgerft.so lib/libbcmwl.so lib/liblgdrm.so lib/libwmdrmpd.so \
+               lib/liboem_rapi.so lib/libdss.so lib/libqmi.so lib/libmmgsdilib.so lib/libcm.so lib/liboncrpc.so lib/libdsm.so lib/libqueue.so \
+			   lib/libril-qc-1.so lib/libdiag.so
+#Wifi
+PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
+#Keyboard
+PROPRIETARY += usr/keychars/eve_qwerty.kcm.bin
+
+PRODUCT_COPY_FILES += $(foreach i,$(PROPRIETARY),$(LOCAL_PATH)/proprietary/$(notdir $i):system/$i)
 
 #PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/proprietary/pvasflocal.cfg:system/etc/pvasflocal.cfg \

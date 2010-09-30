@@ -1,0 +1,19 @@
+#!/system/bin/sh
+TAG=checkgapps
+ARC=/sdcard/gapps-mdpi-20100926-signed.zip
+
+if [[ -e system/framework/com.google.android.maps.jar ]]; then
+  echo "$TAG: Google apps are already installed"
+else
+  echo "$TAG: Looking for $ARC"
+  mount -o remount,rw /system
+  mount -t vfat -o dirsync,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8 /dev/block/mmcblk0p1 /sdcard
+  chown system system /sdcard
+  chmod 0077 /sdcard
+  if [[ -e $ARC ]]; then
+    echo -n "$TAG: Found $ARC, extracting ... "
+    unzip -o $ARC -x 'META-INF*' -d / && echo "successful" || echo "failed"
+  fi
+  umount /sdcard
+  mount -o remount,ro /system
+fi
