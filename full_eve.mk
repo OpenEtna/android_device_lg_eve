@@ -38,11 +38,11 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.com.android.dateformat=MM-dd-yyyy \
     ro.ril.hsxpa=1 \
     ro.ril.gprsclass=10 \
-    ro.media.dec.jpeg.memcap=10000000
+    ro.media.dec.jpeg.memcap=10000000 \
+	ro.setupwizard.enable_bypass=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/lib/libril-qc-1.so \
-	rild.libargs=-d /dev/smd0 \
     wifi.interface=wlan0
 
 # Time between scans in seconds. Keep it high to minimize battery drain.
