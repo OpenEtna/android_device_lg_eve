@@ -67,9 +67,9 @@ $(file) : $(LOCAL_PATH)/prebuilt/initlogo.rle | $(ACP)
 ALL_PREBUILT += $(file)
 
 
-#include $(CLEAR_VARS)
-#LOCAL_SRC_FILES := trout-keypad.kcm
-#include $(BUILD_KEY_CHAR_MAP)
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := eve_qwerty.kcm
+include $(BUILD_KEY_CHAR_MAP)
 
 #include $(CLEAR_VARS)
 #LOCAL_SRC_FILES := trout-keypad-v2.kcm
@@ -251,7 +251,8 @@ PRODUCT_COPY_FILES += \
 	device/lg/eve/prebuilt/15checkgapps:system/etc/init.d/15checkgapps \
 	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl-english \
 	device/lg/eve/prebuilt/eve_qwerty.kl-german:system/usr/keylayout/eve_qwerty.kl-german \
-	device/lg/eve/prebuilt/eve_qwerty.kl-french:system/usr/keylayout/eve_qwerty.kl-french
+	device/lg/eve/prebuilt/eve_qwerty.kl-french:system/usr/keylayout/eve_qwerty.kl-french \
+	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl
 
 #Radio
 PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so \
@@ -260,8 +261,6 @@ PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libri
 			   lib/libril-qc-1.so lib/libdiag.so
 #Wifi
 PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
-#Keyboard
-PROPRIETARY += usr/keychars/eve_qwerty.kcm.bin
 
 PRODUCT_COPY_FILES += $(foreach i,$(PROPRIETARY),$(LOCAL_PATH)/proprietary/$(notdir $i):system/$i)
 
