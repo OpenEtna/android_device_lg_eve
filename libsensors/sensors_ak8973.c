@@ -422,7 +422,9 @@ static native_handle_t* sensors_control_open_data_source(struct sensors_control_
     if(f < 0 ) {
       LOGE("Error opening /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable for proximity sensor enabling");
     } else {
-      write(f,"1",2);
+      if( write(f,"1",2) == -1 ) {
+        LOGE("Error writing to /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable");
+      }
       close(f);
     }
     
