@@ -1,0 +1,25 @@
+#!/bin/bash
+if [[ $# -lt 1 ]]; then
+  echo "Call $0 SystemVersionNumber [BootVersionNumber]"
+  exit 1
+fi
+
+BASE=out/target/product/eve/
+if [[ ! -f $BASE/system.img || ! -d $BASE/system ]]; then
+  echo "ERROR: system.img or system/ does not exist!"
+  exit 1
+fi
+
+mkdir -p ../Images
+
+echo "Packing system"
+cp -a $BASE/system.img Images/systemV$1.img
+rm -Rf ../Images/systemV$1
+cp -a $BASE/system ../Images/systemV$1
+rm -f ../Images/systemV$1.7z
+7z a -t7z -mx9 ../Images/systemV$1.7z ../Images/systemV$1.img
+
+if [[ $# -eq 2 ]]; then
+  echo "Packing boot"
+  cp $BASE/boot.img ../Images/bootV$2.img
+fi
