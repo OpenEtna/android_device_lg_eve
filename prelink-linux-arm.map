@@ -205,3 +205,11 @@ libstlport.so           0x9D100000 # [~3M] for external/stlport
 libzxing.so             0x9D000000 # [<64K] for goggles
 libinterstitial.so      0x9CF00000 # [<64K] for goggles
 liblept.so              0x9CA00000 # [~5M] for external/leptonica
+
+
+#Proprietary libs
+#liblgdrmxyssl.so        0x6afc0000
+#liblgdrmwbxml.so        0x6af80000
+#libwmdrmpd.so           0x6af00000
+#liblgdrm.so             0x6ad00000
+#libril_log.so           0x59f00000
