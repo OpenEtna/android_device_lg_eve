@@ -1,0 +1,57 @@
+#!/usr/bin/python
+import os, sys, string, re
+
+SYMBOLS_DIR="out/target/product/openetna/symbols"
+
+def main():
+  if len(sys.argv) != 3:
+    print "./stack 0005d700 lib/libdvm.so"
+    print "OR"
+    print "./stack 0005d700 /system/lib/libdvm.so"
+    return
+
+  lib = sys.argv[2]
+  if not lib.startswith("/system/"):
+    lib = "/system/"+lib
+  addr = sys.argv[1]
+
+  print lib, addr
+  uname = os.uname()[0]
+  if uname == "Darwin":
+    proc = os.uname()[-1]
+    if proc == "i386":
+      uname = "darwin-x86"
+    else:
+      uname = "darwin-ppc"
+  elif uname == "Linux":
+    uname = "linux-x86"
+  
+  if lib != "":
+    cmd = "./prebuilt/" + uname + \
+    "/toolchain/arm-eabi-4.2.1/bin/arm-eabi-addr2line" \
+    + " -f -e " + SYMBOLS_DIR + lib \
+    + " 0x" + addr
+    stream = os.popen(cmd)
+    lines = stream.readlines()
+    list = map(string.strip, lines)
+  else:
+    list = []
+    
+  if list != []:
+      # Name like "move_forward_type<JavaVMOption>" causes troubles
+      mangled_name = re.sub('<', '\<', list[0]);
+      mangled_name = re.sub('>', '\>', mangled_name);
+      cmd = "./prebuilt/" + uname + "/toolchain/arm-eabi-4.2.1/bin/arm-eabi-c++filt "\
+      + mangled_name
+      stream = os.popen(cmd)
+      list[0] = stream.readline()
+      stream.close()
+      list = map(string.strip, list)
+  else:
+    list = [ "(unknown)", "(unknown)" ]
+
+  print list
+
+if __name__ == "__main__":
+    main()
+
