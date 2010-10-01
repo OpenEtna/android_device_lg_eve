@@ -258,7 +258,7 @@ PRODUCT_COPY_FILES += \
 PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so \
                lib/libnv.so lib/libwmsts.so lib/liblgeat.so lib/libril_log.so lib/liblgerft.so lib/libbcmwl.so lib/liblgdrm.so lib/libwmdrmpd.so \
                lib/liboem_rapi.so lib/libdss.so lib/libqmi.so lib/libmmgsdilib.so lib/libcm.so lib/liboncrpc.so lib/libdsm.so lib/libqueue.so \
-			   lib/libril-qc-1.so lib/libdiag.so
+			   lib/libril-qc-1.so lib/libdiag.so lib/libril.so
 #Wifi
 PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
 
