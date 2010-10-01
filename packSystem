@@ -13,7 +13,7 @@ fi
 mkdir -p ../Images
 
 echo "Packing system"
-cp -a $BASE/system.img Images/systemV$1.img
+cp -a $BASE/system.img ../Images/systemV$1.img
 rm -Rf ../Images/systemV$1
 cp -a $BASE/system ../Images/systemV$1
 rm -f ../Images/systemV$1.7z
