@@ -1,6 +1,6 @@
 #!/system/bin/sh
 TAG=checkgapps
-ARC=/sdcard/gapps-mdpi-20100926-signed.zip
+ARC=/sdcard/gapps-mdpi-20100930-signed.zip
 
 if [[ -e system/framework/com.google.android.maps.jar ]]; then
   echo "$TAG: Google apps are already installed"
