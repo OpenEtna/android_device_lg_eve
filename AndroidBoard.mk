@@ -251,7 +251,8 @@ PRODUCT_COPY_FILES += \
 	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl-english \
 	device/lg/eve/prebuilt/eve_qwerty.kl-german:system/usr/keylayout/eve_qwerty.kl-german \
 	device/lg/eve/prebuilt/eve_qwerty.kl-french:system/usr/keylayout/eve_qwerty.kl-french \
-	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl
+	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl \
+	device/lg/eve/prebuilt/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 #Radio
 PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so \
