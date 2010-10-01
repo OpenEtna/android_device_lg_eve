@@ -18,4 +18,5 @@
 -->
 <resources>
     <bool name="def_accelerometer_rotation">true</bool>
+    <bool name="assisted_gps_enabled">false</bool>
 </resources>
