@@ -243,7 +243,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/proprietary/libmm-qcamera-tgt.so:system/lib/libmm-qcamera-tgt.so \
 	$(LOCAL_PATH)/proprietary/libmmcamera.so:system/lib/libmmcamera.so \
 	$(LOCAL_PATH)/proprietary/libmmjpeg.so:system/lib/libmmjpeg.so \
-	$(LOCAL_PATH)/proprietary/libspeech.so:system/lib/libspeech.so \
     $(LOCAL_PATH)/proprietary/akmd2:system/bin/akmd2 \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \

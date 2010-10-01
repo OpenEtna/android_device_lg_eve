@@ -21,7 +21,7 @@ FILES="$FILES lib/libomx_wmadec_sharedlibrary.so lib/libomx_wmvdec_sharedlibrary
 #FILES="$FILES lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so"
 #etc/pvasflocal.cfg
 
-SRC="../../../../my-system/korean-v10t"
+SRC="../../../../korean-v10t"
 
 if [[ ! -e $SRC ]]; then
   echo "ERROR: Could not find $SRC"
