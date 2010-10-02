@@ -248,10 +248,9 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
 	device/lg/eve/prebuilt/15checkgapps:system/etc/init.d/15checkgapps \
-	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl-english \
-	device/lg/eve/prebuilt/eve_qwerty.kl-german:system/usr/keylayout/eve_qwerty.kl-german \
-	device/lg/eve/prebuilt/eve_qwerty.kl-french:system/usr/keylayout/eve_qwerty.kl-french \
-	device/lg/eve/prebuilt/eve_qwerty.kl-english:system/usr/keylayout/eve_qwerty.kl \
+	device/lg/eve/prebuilt/eve_qwerty-qwertz.kl:system/usr/keylayout/eve_qwerty-qwertz.kl \
+	device/lg/eve/prebuilt/eve_qwerty-azerty.kl:system/usr/keylayout/eve_qwerty-azerty.kl \
+	device/lg/eve/prebuilt/eve_qwerty.kl:system/usr/keylayout/eve_qwerty.kl \
 	device/lg/eve/prebuilt/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 #Radio
