@@ -61,9 +61,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=0
 
-# Disable JIT by default
+# Enable JIT by default
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.execution-mode=int:fast
+    dalvik.vm.execution-mode=int:jit
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
