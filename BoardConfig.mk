@@ -16,7 +16,9 @@ WPA_SUPPLICANT_VERSION      := VER_0_6_X
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/wireless.ko"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/system/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
 WIFI_DRIVER_MODULE_NAME     := "wireless"
-BOARD_WLAN_DEVICE           := bcm4329
+
+#This would pull in the wrong wpa_supplicant.conf and dhcpcd.conf
+#BOARD_WLAN_DEVICE           := bcm4329
 
 BOARD_USES_GENERIC_AUDIO := false
 BOARD_USE_HTC_LIBSENSORS := false
