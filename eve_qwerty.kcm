@@ -1,9 +1,12 @@
-[type=QWERTY]                                           
+[type=QWERTY]
+#ä: 0x00C4
 #ü: 0x00FC
-#ö:0x00D6
+#ö: 0x00D6
+#Also consider that the by the different layouts QWERTY,QWERTZ,AZERTY we also have
+#special characters on keys which are unused by the other layouts.
 # keycode       display number  base    caps    fn      caps_fn
-                                                        
-A               'A'     '2'     'a'     'A'     0x00E4  0x00C4
+
+A               'A'     '2'     'a'     'A'     0x9     0x00C4
 B               'B'     '2'     'b'     'B'     ','     ','
 C               'C'     '2'     'c'     'C'     '"'     '"'
 D               'D'     '3'     'd'     'D'     '\'     0x00
@@ -27,17 +30,17 @@ U               'U'     '8'     'u'     'U'     '+'     '+'
 V               'V'     '8'     'v'     'V'     '/'     '/'
 W               'W'     '9'     'w'     'W'     '`'     0x00
 X               'X'     '9'     'x'     'X'     '''     '''
-Y               'Y'     '9'     'y'     'Y'     '|'     0x00
+Y               'Y'     '9'     'y'     'Y'     '-'     '-'
 Z               'Z'     '9'     'z'     'Z'     '-'     '-'
-                                                        
+
 COMMA           ','     ','     ','     '?'     '?'     ','
 PERIOD          '.'     '.'     '.'     '/'     '?'     0x2026
 AT              '@'     0x00    '@'     '~'     '~'     0x2022
 SLASH           '/'     '/'     '/'     '?'     '?'     '\'
-                                                        
+
 SPACE           0x20    0x20    0x20    0x20    0xEF01  0xEF01
 ENTER         0xa     0xa     0xa     0xa     0xa     0xa
-                                                        
+
 0               '0'     '0'     '0'     ')'     ')'     ')'
 1               '1'     '1'     '1'     '!'     '!'     '!'
 2               '2'     '2'     '2'     '@'     '@'     '@'
@@ -48,8 +51,8 @@ ENTER         0xa     0xa     0xa     0xa     0xa     0xa
 7               '7'     '7'     '7'     '&'     '&'     '&'
 8               '8'     '8'     '8'     '*'     '*'     '*'
 9               '9'     '9'     '9'     '('     '('     '('
-                                                        
-                                                        
+
+
 # these are not actually on the Dream keypad... remove?
 TAB             0x9     0x9     0x9     0x9     0x9     0x9
 GRAVE           '`'     '`'     '`'     '~'     '`'     '~'
@@ -63,6 +66,3 @@ APOSTROPHE      '''     '''     '''     '"'     '''     '"'
 STAR            '*'     '*'     '*'     '*'     '*'     '*'
 POUND           '#'     '#'     '#'     '#'     '#'     '#'
 PLUS            '+'     '+'     '+'     '+'     '+'     '+'
-                                                        
-                                                        
-                                                        
