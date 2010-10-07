@@ -270,6 +270,9 @@ PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libri
 #Wifi
 PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
 
+#OpenGL
+PROPRIETARY += lib/egl/libGLES_qcom.so
+
 PRODUCT_COPY_FILES += $(foreach i,$(PROPRIETARY),$(LOCAL_PATH)/proprietary/$(notdir $i):system/$i)
 
 #PRODUCT_COPY_FILES += \

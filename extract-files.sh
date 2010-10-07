@@ -16,12 +16,13 @@ FILES="$FILES bin/akmd2"
 #Camera
 FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
 #Video
-FILES="$FILES lib/libmm-adspsvc.so lib/libOmxH264Dec.so lib/libOmxMpeg4Dec.so lib/libOmxVidEnc.so"
-FILES="$FILES lib/libomx_wmadec_sharedlibrary.so lib/libomx_wmvdec_sharedlibrary.so"
-#FILES="$FILES lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so"
-#etc/pvasflocal.cfg
+CY_FILES="system/lib/libmm-adspsvc.so system/lib/libOmxH264Dec.so system/lib/libOmxMpeg4Dec.so system/lib/libOmxVidEnc.so"
+CY_FILES="$CY_FILES system/lib/libomx_wmadec_sharedlibrary.so system/lib/libomx_wmvdec_sharedlibrary.so"
+#OpenGL
+CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
 
 SRC="../../../../korean-v10t"
+CY_SRC="../../../../update-cm-6.0.0-DS-RC3-signed.zip"
 
 if [[ ! -e $SRC ]]; then
   echo "ERROR: Could not find $SRC"
@@ -36,5 +37,11 @@ do
   #  adb pull /system/$i proprietary/ || exit 1
   #fi
 done
+
+if [[ ! -e $CY_SRC ]]; then
+  wget http://android.chemlab.org/android/testing/update-cm-6.0.0-DS-RC3-signed.zip -O $CY_SRC
+fi
+
+unzip -o -j $CY_SRC $CY_FILES -d proprietary
 
 chmod 755 proprietary/akmd2
