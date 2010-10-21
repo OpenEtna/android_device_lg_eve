@@ -270,6 +270,9 @@ PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libri
 #Wifi
 PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
 
+#Bluetooth
+PROPRIETARY += bin/BCM4325D0.hcd
+
 #OpenGL
 PROPRIETARY += lib/egl/libGLES_qcom.so
 

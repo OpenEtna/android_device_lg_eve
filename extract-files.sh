@@ -9,6 +9,8 @@ FILES="$FILES lib/liboem_rapi.so lib/libdss.so lib/libqmi.so lib/libmmgsdilib.so
 FILES="$FILES lib/libdiag.so lib/libril-qc-1.so lib/libril.so"
 #Wifi
 FILES="$FILES etc/wl/rtecdc.bin etc/wl/nvram.txt"
+#Bluetooth
+FILES="$FILES bin/BCM4325D0.hcd"
 #GPS
 FILES="$FILES lib/libcommondefs.so lib/libgps.so lib/libloc_api-rpc.so lib/libloc_api.so"
 #Compass
