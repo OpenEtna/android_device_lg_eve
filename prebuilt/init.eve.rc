@@ -120,7 +120,7 @@ service dhcpcd /system/bin/dhcpcd -ABKL
 	disabled
 	oneshot
 
-service hciattach /system/bin/brcm_patchram_plus -d --enable_hci --patchram /system/bin/BCM4325D0.hcd /dev/ttyHS0
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000 --patchram /system/bin/BCM4325D0.hcd /dev/ttyHS0
     user bluetooth
     group bluetooth net_bt_admin
     disabled
