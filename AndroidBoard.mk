@@ -259,7 +259,8 @@ PRODUCT_COPY_FILES += \
 	device/lg/eve/prebuilt/eve_qwerty-qwertz.kl:system/usr/keylayout/eve_qwerty-qwertz.kl \
 	device/lg/eve/prebuilt/eve_qwerty-azerty.kl:system/usr/keylayout/eve_qwerty-azerty.kl \
 	device/lg/eve/prebuilt/eve_qwerty.kl:system/usr/keylayout/eve_qwerty.kl \
-	device/lg/eve/prebuilt/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	device/lg/eve/prebuilt/qwerty.kl:system/usr/keylayout/qwerty.kl \
+    device/lg/eve/prebuilt/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
 	device/lg/eve/prebuilt/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
 
 #Radio
