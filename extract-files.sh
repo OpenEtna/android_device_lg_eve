@@ -24,7 +24,8 @@ CY_FILES="$CY_FILES system/lib/libomx_wmadec_sharedlibrary.so system/lib/libomx_
 CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
 
 SRC="../../../../korean-v10t"
-CY_SRC="../../../../update-cm-6.0.0-DS-RC3-signed.zip"
+CY_SRC="../../../../cm_dream_sapphire_full-220.zip"
+CY_URL="http://mirror.teamdouche.net/get/dream_sapphire/cm_dream_sapphire_full-220.zip"
 
 if [[ ! -e $SRC ]]; then
   echo "ERROR: Could not find $SRC"
@@ -41,7 +42,7 @@ do
 done
 
 if [[ ! -e $CY_SRC ]]; then
-  wget http://android.chemlab.org/android/testing/update-cm-6.0.0-DS-RC3-signed.zip -O $CY_SRC
+  wget "$CY_URL" -O $CY_SRC
 fi
 
 unzip -o -j $CY_SRC $CY_FILES -d proprietary
