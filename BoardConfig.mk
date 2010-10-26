@@ -40,10 +40,6 @@ BOARD_GPS_LIBRARIES := libgps librpc libloc_api libloc_api-rpc
 
 USE_PV_WINDOWS_MEDIA := false
 
-BOARD_NO_PV_AUTHOR_CLOCK := true
-
 USE_CAMERA_STUB := false
 BOARD_EGL_CFG := device/lg/eve/egl.cfg
-
-#TARGET_PRELINK_MODULE := false
 
