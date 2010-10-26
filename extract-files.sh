@@ -20,6 +20,8 @@ FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
 #Video
 CY_FILES="system/lib/libmm-adspsvc.so system/lib/libOmxH264Dec.so system/lib/libOmxMpeg4Dec.so system/lib/libOmxVidEnc.so"
 CY_FILES="$CY_FILES system/lib/libomx_wmadec_sharedlibrary.so system/lib/libomx_wmvdec_sharedlibrary.so"
+CY_FILES="$CY_FILES system/lib/libpvasfcommon.so system/lib/libpvasflocalpbreg.so system/lib/libpvasflocalpb.so system/etc/pvasflocal.cfg"
+
 #OpenGL
 CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
 

@@ -277,6 +277,9 @@ PROPRIETARY += bin/BCM4325D0.hcd
 #OpenGL
 PROPRIETARY += lib/egl/libGLES_qcom.so
 
+#Video
+PROPRIETARY += lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so etc/pvasflocal.cfg
+
 PRODUCT_COPY_FILES += $(foreach i,$(PROPRIETARY),$(LOCAL_PATH)/proprietary/$(notdir $i):system/$i)
 
 #PRODUCT_COPY_FILES += \
