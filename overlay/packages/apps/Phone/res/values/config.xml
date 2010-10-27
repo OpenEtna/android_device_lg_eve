@@ -15,6 +15,11 @@
 -->
 
 <resources>
+    <!-- This makes the Phone app ignore EVENT_SIM_NETWORK_LOCKED events.
+         So it does not show the IccNetworkDepersonalizationPanel.
+         This fixes openetna issue 227 -->
+    <bool name="ignore_sim_network_locked_events">true</bool>
+
     <bool name="allow_incoming_call_touch_ui">true</bool>
     <bool name="allow_in_call_touch_ui">true</bool>
     <bool name="send_mic_mute_to_AudioManager">true</bool>
