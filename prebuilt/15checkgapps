@@ -6,14 +6,36 @@ if [[ -e system/framework/com.google.android.maps.jar ]]; then
   echo "$TAG: Google apps are already installed"
 else
   echo "$TAG: Looking for $ARC"
+
+  MOUNTED_SD=0
+  if ! mount | grep sdcard > /dev/null; then
+    #Find the first vfat partition (=id 6) on sdcard
+    MMC=/dev/block/mmcblk0
+    FDISK="busybox fdisk"
+    PARTITION=`$FDISK -l $MMC | awk '/^\// && $5 == 6 {print $1;exit;}'`
+    if [ -b "$PARTITION" ]; then
+        echo "$TAG: mounting vfat partition $PARTITION"
+        mount -t vfat -o dirsync,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8 $PARTITION /mnt/sdcard \
+        || exit 1
+        #&& chown system system /mnt/sdcard \
+        #&& chmod 0077 /mnt/sdcard \
+    else
+        echo "$TAG: ERROR: Did not found a vfat partition on sdcard ($MMC)"
+        exit 1
+    fi
+    MOUNTED_SD=1
+  fi
+
   mount -o remount,rw /system
-  mount -t vfat -o dirsync,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8 /dev/block/mmcblk0p1 /sdcard
-  chown system system /sdcard
-  chmod 0077 /sdcard
+
   if [[ -e $ARC ]]; then
     echo -n "$TAG: Found $ARC, extracting ... "
     unzip -o $ARC -x 'META-INF*' -d / && echo "successful" || echo "failed"
   fi
-  umount /sdcard
+
+  if [[ $MOUNTED_SD == 1 ]]; then
+    umount /mnt/sdcard
+  fi
+
   mount -o remount,ro /system
 fi
