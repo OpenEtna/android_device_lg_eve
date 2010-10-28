@@ -22,6 +22,10 @@ on boot
     setprop wifi.supplicant_scan_interval 20
     setprop wifi.interface wlan0
 	
+    #flashlight led
+    chown system camera /sys/class/leds/flashlight/brightness
+    chmod 0660          /sys/class/leds/flashlight/brightness
+
     chown system system /sys/class/backlight/ct810-bl/brightness
 	chown system system /sys/class/backlight/adam-bl/brightness
 	chown system system /sys/class/backlight/adam-bl/alc_mode
