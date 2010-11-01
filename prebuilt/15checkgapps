@@ -9,10 +9,10 @@ else
 
   MOUNTED_SD=0
   if ! mount | grep sdcard > /dev/null; then
-    #Find the first vfat partition (=id 6) on sdcard
+    #Find the first fat partition. We do not go by partition
+    #id as there are so many for different flavours of FAT(16/32) (/LBA)
     MMC=/dev/block/mmcblk0
-    FDISK="busybox fdisk"
-    PARTITION=`$FDISK -l $MMC | awk '/^\// && $5 == 6 {print $1;exit;}'`
+    PARTITION=`busybox fdisk -l $MMC | awk '/^\// && /FAT/ {print $1;exit;}'`
     if [ -b "$PARTITION" ]; then
         echo "$TAG: mounting vfat partition $PARTITION"
         mount -t vfat -o dirsync,nosuid,nodev,noexec,uid=1000,gid=1015,fmask=0702,dmask=0702,shortname=mixed,utf8 $PARTITION /mnt/sdcard \
@@ -20,7 +20,9 @@ else
         #&& chown system system /mnt/sdcard \
         #&& chmod 0077 /mnt/sdcard \
     else
-        echo "$TAG: ERROR: Did not found a vfat partition on sdcard ($MMC)"
+        echo "$TAG: ERROR: Did not find a FAT partition on sdcard ($MMC). Partitions are:"
+        #Print the known partitions
+        busybox fdisk -l $MMC
         exit 1
     fi
     MOUNTED_SD=1
