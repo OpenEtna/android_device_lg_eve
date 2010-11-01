@@ -23,6 +23,7 @@ DEVICE_PACKAGE_OVERLAYS := device/lg/eve/overlay
 PRODUCT_PACKAGES += \
     VoiceDialer \
     FM \
+    LiveWallpapersPicker \
     sensors.eve
 
 # Install the features available on this device.

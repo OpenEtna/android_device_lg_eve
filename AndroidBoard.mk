@@ -255,7 +255,8 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
-	device/lg/eve/prebuilt/15checkgapps:system/etc/init.d/15checkgapps \
+	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml \
+    device/lg/eve/prebuilt/15checkgapps:system/etc/init.d/15checkgapps \
 	device/lg/eve/prebuilt/eve_qwerty-qwertz.kl:system/usr/keylayout/eve_qwerty-qwertz.kl \
 	device/lg/eve/prebuilt/eve_qwerty-azerty.kl:system/usr/keylayout/eve_qwerty-azerty.kl \
 	device/lg/eve/prebuilt/eve_qwerty.kl:system/usr/keylayout/eve_qwerty.kl \
