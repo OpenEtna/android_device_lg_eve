@@ -34,10 +34,7 @@ BOARD_HAVE_FM_RADIO := true
 
 TARGET_HARDWARE_3D := false
 
-#We need libloc_api.so here, because it has a symbol that is needed by libril-qc-1.so
-#libril-qc-1.so links to libhardware_legacy.so which in turn links to all libraries listed here
-#libloc_api needs libloc_api-rpc
-BOARD_GPS_LIBRARIES := libgps librpc libloc_api libloc_api-rpc
+BOARD_GPS_LIBRARIES :=  libloc_api
 
 USE_PV_WINDOWS_MEDIA := false
 
