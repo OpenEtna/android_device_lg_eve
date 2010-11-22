@@ -96,7 +96,7 @@ char const*const BUTTON_FILE
         = "/sys/devices/platform/android-keyled/setting";
 
 char const*const CAPS_FILE
-        = "/sys/class/leds/caps/brightness";
+        = "/sys/devices/platform/android-keyled/shift";
 
 char const*const FUNC_FILE
         = "/sys/class/leds/func/brightness";
@@ -475,6 +475,9 @@ static int open_lights(const struct hw_module_t* module, char const* name,
     }
     else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
         set_light = set_light_notifications2;
+    }
+    else if (0 == strcmp(LIGHT_ID_CAPS, name)) {
+        set_light = set_light_caps;
     }
     else {
         return -EINVAL;
