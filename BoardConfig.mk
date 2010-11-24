@@ -13,9 +13,9 @@ TARGET_NO_RECOVERY := true
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION      := VER_0_6_X
-WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/wireless.ko"
-WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/system/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
-WIFI_DRIVER_MODULE_NAME     := "wireless"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4329.ko"
+WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0"
+WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 
 #This would pull in the wrong wpa_supplicant.conf and dhcpcd.conf
 #BOARD_WLAN_DEVICE           := bcm4329
