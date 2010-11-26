@@ -68,7 +68,7 @@ on boot
 # LGE_CHANGE, [munyoung@lge.com] Disable fbcon cursor blink for fix BT sound break on sleep
 	write /sys/devices/virtual/graphics/fbcon/cursor_blink 0
         
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu0/cpufreq/ondemand/sampling_rate 20000
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 245760
 
