@@ -24,8 +24,8 @@ CY_FILES="$CY_FILES system/lib/libpvasfcommon.so system/lib/libpvasflocalpbreg.s
 CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
 
 SRC="../../../../korean-v10t"
-CY_SRC="../../../../cm_dream_sapphire_full-220.zip"
-CY_URL="http://mirror.teamdouche.net/get/dream_sapphire/cm_dream_sapphire_full-220.zip"
+CY_SRC="../../../../cm_dream_sapphire_full-263.zip"
+CY_URL="http://mirror.teamdouche.net/get/dream_sapphire/cm_dream_sapphire_full-263.zip"
 
 if [[ ! -e $SRC ]]; then
   echo "ERROR: Could not find $SRC"
