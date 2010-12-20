@@ -11,8 +11,6 @@ FILES="$FILES lib/libdiag.so lib/libril-qc-1.so lib/libril.so"
 FILES="$FILES etc/wl/rtecdc.bin etc/wl/nvram.txt"
 #Bluetooth
 FILES="$FILES bin/BCM4325D0.hcd"
-#Compass
-FILES="$FILES bin/akmd2"
 #Camera
 FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
 #Video

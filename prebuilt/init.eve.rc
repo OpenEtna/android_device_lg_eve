@@ -129,5 +129,3 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000
     user bluetooth
     group bluetooth net_bt_admin
     disabled
-
-service akmd2 /system/bin/akmd2
