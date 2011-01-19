@@ -66,6 +66,11 @@ $(file) : $(LOCAL_PATH)/prebuilt/initlogo.rle | $(ACP)
 	$(transform-prebuilt-to-target)
 ALL_PREBUILT += $(file)
 
+file := $(TARGET_ROOT_OUT)/ueventd.eve.rc
+$(file) : $(LOCAL_PATH)/prebuilt/ueventd.eve.rc | $(ACP)
+	$(transform-prebuilt-to-target)
+ALL_PREBUILT += $(file)
+
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := eve_qwerty.kcm
