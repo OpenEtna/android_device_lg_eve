@@ -52,14 +52,11 @@ on boot
     write /proc/sys/net/ipv4/tcp_adv_win_scale  1
 
     #Somehow this is not handled by uevents
-    exec /sbin/busybox mknod /dev/msm_camera0 c 246 0
-    chown system camera /dev/msm_camera0
-    chmod 0666 /dev/msm_camera
-	chmod 0666 /dev/mv9319_sony_5m
-
-    # check and upgrade Camera ISP Firmware
-    write /sys/devices/platform/i2c-gpio.3/i2c-adapter/i2c-3/3-0028/firmware 1
-    write /dev/msm_camera0 0
+    mkdir /dev/msm_camera
+	chown system camera /dev/msm_camera
+	exec /sbin/busybox mknod /dev/msm_camera/msm_camera0 c 247 0
+    chown system camera /dev/msm_camera/msm_camera0
+    chmod 0666 /dev/msm_camera/msm_camera0
 
     chmod 0666 /sys/devices/platform/android-keyled/setting
     chmod 0666 /sys/devices/platform/android-keyled/shift
@@ -133,3 +130,5 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000
     disabled
 
 service qmuxd /system/bin/qmuxd
+
+service akmd2 /system/bin/akmd2

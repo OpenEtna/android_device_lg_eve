@@ -230,16 +230,33 @@ LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE)
 OVERRIDE_BUILT_MODULE_PATH := $(TARGET_OUT_INTERMEDIATE_LIBRARIES)
 include $(BUILD_PREBUILT)
 
-#include $(CLEAR_VARS)
-#LOCAL_MODULE := libgps.so
-#LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-#LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
-#LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE)
-#OVERRIDE_BUILT_MODULE_PATH := $(TARGET_OUT_INTERMEDIATE_LIBRARIES)
-#include $(BUILD_PREBUILT)
+include $(CLEAR_VARS)
+LOCAL_MODULE := libcommondefs.so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
+LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE)
+OVERRIDE_BUILT_MODULE_PATH := $(TARGET_OUT_INTERMEDIATE_LIBRARIES)
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libril.so
+LOCAL_MODULE := libloc-rpc.so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
+LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE) $(TARGET_OUT_INTERMEDIATE_LIBRARIES)/libcommondefs.so
+OVERRIDE_BUILT_MODULE_PATH := $(TARGET_OUT_INTERMEDIATE_LIBRARIES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libloc.so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
+#Only the first file is copied, the other are deps
+LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE) $(TARGET_OUT_INTERMEDIATE_LIBRARIES)/libloc-rpc.so
+OVERRIDE_BUILT_MODULE_PATH := $(TARGET_OUT_INTERMEDIATE_LIBRARIES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libcamera.so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
 LOCAL_SRC_FILES := proprietary/$(LOCAL_MODULE)
@@ -256,9 +273,6 @@ include $(BUILD_PREBUILT)
 
 #$(LOCAL_PATH)/proprietary/libGLES_qcom.so:system/lib/egl/libGLES_qcom.so
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/proprietary/libmm-qcamera-tgt.so:system/lib/libmm-qcamera-tgt.so \
-	$(LOCAL_PATH)/proprietary/libmmcamera.so:system/lib/libmmcamera.so \
-	$(LOCAL_PATH)/proprietary/libmmjpeg.so:system/lib/libmmjpeg.so \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
@@ -281,13 +295,22 @@ PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libri
 PROPRIETARY += etc/wl/rtecdc.bin etc/wl/nvram.txt
 
 #Bluetooth
-PROPRIETARY += bin/BCM4325D0.hcd
+PROPRIETARY += bin/BCM4325D0_004.001.007.0168.0169.hcd bin/btld
 
 #OpenGL
 PROPRIETARY += lib/egl/libGLES_qcom.so
 
 #Video
 PROPRIETARY += lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so etc/pvasflocal.cfg
+
+#Sensors
+PROPRIETARY += bin/akmd2
+
+#Camera
+PROPRIETARY += lib/libmm-qcamera-tgt.so lib/libmmjpeg.so
+
+#GPS
+PROPRIETARY += lib/libloc_api.so lib/libloc_ext.so lib/libgps.so
 
 PRODUCT_COPY_FILES += $(foreach i,$(PROPRIETARY),$(LOCAL_PATH)/proprietary/$(notdir $i):system/$i)
 

@@ -13,16 +13,22 @@ FILES="$FILES lib/libdss.so lib/libqmi.so bin/qmuxd"
 #Wifi
 FILES="$FILES etc/wl/rtecdc.bin etc/wl/nvram.txt"
 #Bluetooth
-FILES="$FILES bin/BCM4325D0.hcd"
+FILES="$FILES bin/BCM4325D0_004.001.007.0168.0169.hcd bin/btld"
 #Camera
-FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmcamera.so lib/libmmjpeg.so"
+FILES="$FILES lib/libmm-qcamera-tgt.so lib/libmmjpeg.so lib/libcamera.so"
 #Video
 CY_FILES="system/lib/libmm-adspsvc.so system/lib/libOmxH264Dec.so system/lib/libOmxMpeg4Dec.so system/lib/libOmxVidEnc.so"
 CY_FILES="$CY_FILES system/lib/libomx_wmadec_sharedlibrary.so system/lib/libomx_wmvdec_sharedlibrary.so"
 CY_FILES="$CY_FILES system/lib/libpvasfcommon.so system/lib/libpvasflocalpbreg.so system/lib/libpvasflocalpb.so system/etc/pvasflocal.cfg"
 
+#Sensors
+FILES="$FILES bin/akmd2"
+
 #OpenGL
-CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
+FILES="$FILES lib/egl/libGLES_qcom.so"
+
+#GPS
+FILES="$FILES lib/libloc.so lib/libloc-rpc.so lib/libcommondefs.so lib/libloc_api.so lib/libloc_ext.so lib/libgps.so"
 
 SRC="../../../../lg2.2/system"
 CY_SRC="../../../../cm_dream_sapphire_full-263.zip"
