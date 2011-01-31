@@ -65,6 +65,8 @@
 #define EVENT_TYPE_TEMPERATURE      ABS_THROTTLE
 #define EVENT_TYPE_STEP_COUNT       ABS_GAS
 
+#define EVENT_TYPE_LIGHT            ABS_VOLUME
+
 // 720 LSG = 1G
 #define LSG                         (720.0f)
 
@@ -101,18 +103,21 @@
 #define SENSORS_ACCELERATION       0x02
 #define SENSORS_TEMPERATURE        0x04
 #define SENSORS_MAGNETIC_FIELD     0x08
+#define SENSORS_LIGHT			   0x10
 #define SENSORS_PROXIMITY		   0x20
 #define SENSORS_ORIENTATION_RAW_HANDLE    7
 #define SENSORS_ORIENTATION_HANDLE        0
 #define SENSORS_ACCELERATION_HANDLE       1
 #define SENSORS_TEMPERATURE_HANDLE        2
 #define SENSORS_MAGNETIC_FIELD_HANDLE     3
+#define SENSORS_LIGHT_HANDLE			  4
 #define SENSORS_PROXIMITY_HANDLE     	  5
 
 #define SUPPORTED_SENSORS (SENSORS_ORIENTATION | \
               SENSORS_ACCELERATION | \
               SENSORS_MAGNETIC_FIELD | \
               SENSORS_PROXIMITY | \
+			  SENSORS_LIGHT | \
               SENSORS_ORIENTATION_RAW)
 
 /*****************************************************************************/
@@ -567,6 +572,16 @@ struct sensor_t sensors_descs[] = {
       resolution : 1,
       power : 20,
     },
+	{
+      name : "Brightness",
+      vendor : "-",
+      version : 1,
+      handle : SENSORS_LIGHT_HANDLE,
+      type : SENSOR_TYPE_LIGHT,
+      maxRange : 15.0,
+      resolution : 1,
+      power : 20,
+    },
     0,
 };
 
@@ -582,7 +597,7 @@ struct sensors_data_context_t {
 static int sensors_get_sensors_list(struct sensors_module_t* module,
 		struct sensor_t const** plist){
     *plist = sensors_descs;
-    return 6;/*4;*/ // No need to return number of sensor list
+    return 7;
 }
 
 static int sensors_device_open(const struct hw_module_t* module, const char* name,
@@ -665,6 +680,7 @@ static const int ID_O  = 0;
 static const int ID_A  = 1;
 static const int ID_T  = 2;
 static const int ID_M  = 3;
+static const int ID_L = 4;
 static const int ID_P  = 5;
 static const int ID_OR = 7; // orientation raw
 static sensors_data_t sSensors[MAX_NUM_SENSORS];
@@ -698,10 +714,8 @@ static int sensors_data_data_close(struct sensors_data_device_t *dev)
 
 static int pick_sensor(sensors_data_t* values)
 {
-    uint32_t mask = SENSORS_MASK;
-    while(mask) {
-        uint32_t i = 31 - __builtin_clz(mask);
-        mask &= ~(1<<i);
+	int i;
+	for(i = 0; i < MAX_NUM_SENSORS; ++i) {
         if (sPendingSensors & (1<<i)) {
             sPendingSensors &= ~(1<<i);
             *values = sSensors[i];
@@ -848,6 +862,11 @@ static int sensors_data_poll(struct sensors_data_device_t *dev, sensors_data_t* 
 						new_sensors |= SENSORS_PROXIMITY;
 						LOGD("EVENT_TYPE_PROXIMITY");
 						sSensors[ID_P].distance = event.value;
+						break;
+					case EVENT_TYPE_LIGHT:
+						LOGD("EVENT_TYPE_LIGHT %d", event.value);
+						new_sensors |= SENSORS_LIGHT;
+						sSensors[ID_L].light = event.value;
 						break;
 	                case EVENT_TYPE_STEP_COUNT:
 						LOGD("EVENT_TYPE_STEP_COUNT");
