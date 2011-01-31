@@ -1,6 +1,7 @@
 #!/system/bin/sh
 TAG=checkgapps
-ARC=/sdcard/gapps-mdpi-20100930-signed.zip
+ARC=/sdcard/gapps-mdpi-tiny-20101020-signed.zip
+#ARC=/sdcard/gapps-mdpi-20101213-signed.zip #does not work on froyo
 
 if [[ -e system/framework/com.google.android.maps.jar ]]; then
   echo "$TAG: Google apps are already installed"
