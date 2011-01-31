@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -Rf proprietary
 mkdir -p proprietary
 
 #Radio
