@@ -149,7 +149,6 @@ static int id_to_sensor[MAX_NUM_SENSORS] = {
 static sensors_data_t sSensors[MAX_NUM_SENSORS];
 static uint32_t sPendingSensors;
 static volatile int wakeup;
-static int isControlProcess;
 
 #define event_time_to_sensor_time(event) (event.time.tv_sec*1000000000LL + event.time.tv_usec*1000)
 void set_data_time(sensors_data_t* data) {
@@ -307,8 +306,6 @@ static int open_input(char* iname)
 				return fd;
 			}
 			close(fd);
-		} else {
-			LOGE("Failed to open %d", devname);
 		}
 	}
 	closedir(dir);
@@ -431,7 +428,6 @@ static uint32_t read_sensors_state(int fd)
 static int akm_fd = -1;
 static int akm_input_fd = -1;
 static int bma_input_fd = -1;
-static int prox_input_fd = -1;
 
 void calibrate_analog_apply()
 {
@@ -514,11 +510,9 @@ void akm_measure() {
 static native_handle_t* sensors_control_open_data_source(struct sensors_control_device_t *dev)
 {
 	LOGI("sensors_control_open_data_source");
-	isControlProcess = 1;
-	native_handle_t* nh = native_handle_create(3, 0);
-	nh->data[0] = open_input("compass");
-	nh->data[1] = open_input("bma150");
-	nh->data[2] = open_input("gp2ap002");
+
+	native_handle_t* nh = native_handle_create(0, 0);
+	//nh->data[0] = open_input("compass");
 	return nh;
 }
 
@@ -537,7 +531,7 @@ static int sensors_control_activate(struct sensors_control_device_t *dev,
 		return 0;
 	}
 	sActiveSensors = new_sensors;
-#if 0 /* is done in data_device */
+
 	if((sActiveSensors & SENSORS_AKM) && (akm_input_fd == -1)) {
 		akmd_open();
 		akm_input_fd = open_input("compass");
@@ -555,20 +549,25 @@ static int sensors_control_activate(struct sensors_control_device_t *dev,
 		bma_input_fd = -1;
 	}
 
-	if((sActiveSensors & SENSORS_PROXIMITY) && (prox_input_fd == -1))
-		prox_input_fd = open_input("gp2ap002");
-	else if(!(sActiveSensors & SENSORS_PROXIMITY) && (prox_input_fd != -1)) {
-		close(prox_input_fd);
-		prox_input_fd = -1;
-	}
-#endif
 	return 0;
 }
 
 static int sensors_control_delay(struct sensors_control_device_t *dev, int32_t ms)
 {
-	LOGD("sensors_control_delay");
-	return 0;
+		LOGD("sensors_control_delay");
+
+#ifdef ECS_IOCTL_APP_SET_DELAY
+		if (sAkmFD <= 0) {
+				return -1;
+		}
+		short delay = ms;
+		if (!ioctl(sAkmFD, ECS_IOCTL_APP_SET_DELAY, &delay)) {
+				return -errno;
+		}
+		return 0;
+#else
+		return -1;
+#endif
 }
 
 
@@ -680,7 +679,7 @@ static int sensors_get_sensors_list(struct sensors_module_t* module,
 	return 7;/*4;*/ // No need to return number of sensor list
 }
 
-static int read_brightness(void) {
+static float read_brightness(void) {
 
 	int val;
 	FILE *f = fopen("/sys/class/backlight/adam-bl/alc_brightness","r");
@@ -688,7 +687,7 @@ static int read_brightness(void) {
 	fscanf(f,"%d",&val);
 	fclose(f);
 	LOGI("read_brightness = %d", val);
-	return val;
+	return val*20.0f;
 }
 
 static int sensors_device_open(const struct hw_module_t* module, const char* name,
@@ -744,24 +743,19 @@ static int sensors_control_device_close(struct hw_device_t *dev)
 {
 	struct sensors_control_context_t* ctx = (struct sensors_control_device_t*)dev;
 	LOGD("sensors_control_device_close");
-#if 0 /* is done in data_device */
-	if(akm_fd != -1) {
+	if(akm_fd) {
 		close(akm_fd);
 		akm_fd = -1;
 	}
-	if(bma_input_fd != -1) {
+	if(bma_input_fd) {
 		close(bma_input_fd);
 		bma_input_fd = -1;
 	}
-	if(akm_input_fd != -1) {
+	if(akm_input_fd) {
         close(akm_input_fd);
         akm_input_fd = -1;
     }
-	if(prox_input_fd != -1) {
-		close(prox_input_fd);
-		prox_input_fd = -1;
-	}
-#endif
+
 	free(ctx);
 	return 0;
 }
@@ -785,6 +779,7 @@ static int sensors_control_wake(struct sensors_control_device_t *dev)
 
 static int sensors_data_data_open(struct sensors_data_device_t *dev, native_handle_t* nh)
 {
+	int fd = nh->data[0];
 	int i;
 	LMSInit();
 	memset(&sSensors, 0, sizeof(sSensors));
@@ -797,17 +792,11 @@ static int sensors_data_data_open(struct sensors_data_device_t *dev, native_hand
 		sSensors[i].sensor = id_to_sensor[i];
 	}
 	sPendingSensors = 0;
-	akm_input_fd = dup(nh->data[0]);
-	bma_input_fd = dup(nh->data[1]);
-	prox_input_fd = dup(nh->data[2]);
 	return 0;
 }
 
 static int sensors_data_data_close(struct sensors_data_device_t *dev)
 {
-	close(akm_input_fd);
-	close(bma_input_fd);
-	close(prox_input_fd);
 	return 0;
 }
 
@@ -839,7 +828,6 @@ static int sensors_data_poll(struct sensors_data_device_t *dev, sensors_data_t* 
 	struct input_event event;
 	int nread;
 
-	LOGW("sensors_data_poll: entered");
 	while(!wakeup) {
 		if (sPendingSensors) {
 			LOGD("sPending");
@@ -853,18 +841,16 @@ static int sensors_data_poll(struct sensors_data_device_t *dev, sensors_data_t* 
 		if( ((time.tv_nsec - last_time_poll.tv_nsec)/1000000 + (time.tv_sec - last_time_poll.tv_sec)*1000) > 1000 ) {
 			last_time_poll.tv_nsec = time.tv_nsec;
 			last_time_poll.tv_sec = time.tv_sec;
-			if (sActiveSensors & SENSORS_LIGHT) {
+			if (sActiveSensors & SENSORS_LIGHT ) {
 				sSensors[ID_L].light = read_brightness();
 				set_data_time(&sSensors[ID_L]);
 				sPendingSensors |= SENSORS_LIGHT;
 			}
-			if (sActiveSensors & SENSORS_AKM && isControlProcess)
+			if (sActiveSensors & SENSORS_AKM )
 				akm_measure();
 		}
 
-		if( bma_input_fd == -1
-		 && akm_input_fd == -1 
-		 && prox_input_fd != -1 ) {
+		if( bma_input_fd == -1 && akm_input_fd == -1 ) {
 			usleep(SENSORS_TIMEOUT_MS);
 			continue;
 		}
@@ -882,19 +868,12 @@ static int sensors_data_poll(struct sensors_data_device_t *dev, sensors_data_t* 
 			fds[nfd].revents = 0;
 			nfd++;
 		}
-		if( prox_input_fd != -1 ) {
-            fds[nfd].fd = prox_input_fd;
-            fds[nfd].events = POLLIN;
-            fds[nfd].revents = 0;
-            nfd++;
-        }
-		LOGI("polling for %d %d %d", bma_input_fd, akm_input_fd, prox_input_fd);
+
 		int err = poll(fds, nfd, SENSORS_TIMEOUT_MS);
 		if(err <= 0)
 			continue;
 
-		int i;
-		int fd = -1;
+		int i, fd;
 		for(i=0; i<nfd; ++i) {
 			if(fds[i].revents) {
 				fd = fds[i].fd;
@@ -907,9 +886,6 @@ static int sensors_data_poll(struct sensors_data_device_t *dev, sensors_data_t* 
 			LOGE("Invalid event size");
 			continue;
 		}
-
-		if (event.type == EV_SYN)
-			continue;
 
 		if (event.type != EV_ABS) {
 			LOGE("Invalid event type %d on %s", event.type, (fd == akm_input_fd) ? "akm" : "not akm");
