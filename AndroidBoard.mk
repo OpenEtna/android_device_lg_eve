@@ -261,7 +261,8 @@ PRODUCT_COPY_FILES += \
 	device/lg/eve/prebuilt/eve_qwerty.kl:system/usr/keylayout/eve_qwerty.kl \
 	device/lg/eve/prebuilt/qwerty.kl:system/usr/keylayout/qwerty.kl \
     device/lg/eve/prebuilt/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-	device/lg/eve/prebuilt/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
+	device/lg/eve/prebuilt/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
+	device/lg/eve/prebuilt/gps.conf:system/etc/gps.conf
 
 #Radio
 PROPRIETARY := lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so \
