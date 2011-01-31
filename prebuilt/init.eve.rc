@@ -18,7 +18,9 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
-
+    #For qmuxd and rild
+    mkdir /data/radio 0770 radio radio
+	
     setprop wifi.supplicant_scan_interval 20
     setprop wifi.interface wlan0
 	
@@ -129,3 +131,5 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000
     user bluetooth
     group bluetooth net_bt_admin
     disabled
+
+service qmuxd /system/bin/qmuxd

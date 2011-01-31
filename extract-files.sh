@@ -5,8 +5,10 @@ mkdir -p proprietary
 #Radio
 FILES="lib/liblgdrmwbxml.so lib/liblgdrmxyssl.so lib/libdll.so lib/libril-qcril-hook-oem.so lib/libgsdi_exp.so lib/libgstk_exp.so lib/libwms.so"
 FILES="$FILES lib/libnv.so lib/libwmsts.so lib/liblgeat.so lib/libril_log.so lib/liblgerft.so lib/libbcmwl.so lib/liblgdrm.so lib/libwmdrmpd.so"
-FILES="$FILES lib/liboem_rapi.so lib/libdss.so lib/libqmi.so lib/libmmgsdilib.so lib/libcm.so lib/liboncrpc.so lib/libdsm.so lib/libqueue.so"
+FILES="$FILES lib/liboem_rapi.so lib/libmmgsdilib.so lib/libcm.so lib/liboncrpc.so lib/libdsm.so lib/libqueue.so"
 FILES="$FILES lib/libdiag.so lib/libril-qc-1.so lib/libril.so"
+FILES="$FILES lib/libdss.so lib/libqmi.so bin/qmuxd"
+
 #Wifi
 FILES="$FILES etc/wl/rtecdc.bin etc/wl/nvram.txt"
 #Bluetooth
@@ -21,7 +23,7 @@ CY_FILES="$CY_FILES system/lib/libpvasfcommon.so system/lib/libpvasflocalpbreg.s
 #OpenGL
 CY_FILES="$CY_FILES system/lib/egl/libGLES_qcom.so"
 
-SRC="../../../../korean-v10t"
+SRC="../../../../lg2.2/system"
 CY_SRC="../../../../cm_dream_sapphire_full-263.zip"
 CY_URL="http://mirror.teamdouche.net/get/dream_sapphire/cm_dream_sapphire_full-263.zip"
 
