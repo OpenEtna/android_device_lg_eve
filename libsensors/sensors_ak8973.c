@@ -421,18 +421,6 @@ static native_handle_t* sensors_control_open_data_source(struct sensors_control_
 {
 	LOGI("sensors_control_open_data_source");
 
-    /* enable the proximity sensor */
-    /* TODO: there should be a nicer way by ioctl or something */
-    int f = open("/sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable",O_WRONLY);
-    if(f < 0 ) {
-      LOGE("Error opening /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable for proximity sensor enabling");
-    } else {
-      if( write(f,"1",2) == -1 ) {
-        LOGE("Error writing to /sys/devices/platform/i2c-gpio.6/i2c-adapter/i2c-6/6-0044/enable");
-      }
-      close(f);
-    }
-    
     native_handle * nh = native_handle_create(1, 0);
     nh->data[0] = open_input();
     return nh;
