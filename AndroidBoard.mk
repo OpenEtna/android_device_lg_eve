@@ -301,7 +301,10 @@ PROPRIETARY += bin/BCM4325D0_004.001.007.0168.0169.hcd bin/btld
 PROPRIETARY += lib/egl/libGLES_qcom.so
 
 #Video
-PROPRIETARY += lib/libpvasfcommon.so lib/libpvasflocalpbreg.so lib/libpvasflocalpb.so etc/pvasflocal.cfg
+PROPRIETARY += lib/libOmxWmvDec.so \
+			   lib/libomx_aacdec_sharedlibrary.so lib/libomx_amrdec_sharedlibrary.so lib/libomx_amrenc_sharedlibrary.so lib/libomx_avcdec_sharedlibrary.so \
+			   lib/libomx_m4vdec_sharedlibrary.so lib/libomx_mp3dec_sharedlibrary.so \
+			   lib/libaomx_mp3dec_sharedlibrary.so lib/libaomx_mp4dec_sharedlibrary.so lib/libaomx_wmadec_sharedlibrary.so lib/libaomx_wmvdec_sharedlibrary.so
 
 #Sensors
 PROPRIETARY += bin/akmd2
