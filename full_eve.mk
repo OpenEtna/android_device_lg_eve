@@ -75,15 +75,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     device/lg/eve/media_profiles.xml:/system/etc/media_profiles.xml
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/lg/eve/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
 # stuff common to all HTC phones
 #$(call inherit-product, device/htc/common/common.mk)
 
