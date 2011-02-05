@@ -22,7 +22,9 @@ PRODUCT_PACKAGES += \
     VoiceDialer \
     FM \
     LiveWallpapersPicker \
-    sensors.eve
+    sensors.eve \
+	lights.eve \
+	Torch
 
 # Install the features available on this device.
 PRODUCT_COPY_FILES += \
