@@ -399,18 +399,18 @@ static uint32_t read_sensors_state(int fd)
         if (flags)  sensors |= SENSORS_TEMPERATURE;
         else        sensors &= ~SENSORS_TEMPERATURE;
     }
-	/*
 	if (!ioctl(fd, ECS_IOCTL_APP_GET_PFLAG, &flags)) {
         if (flags)  sensors |= SENSORS_PROXIMITY;
         else        sensors &= ~SENSORS_PROXIMITY;
-    }*/
+    }
 #ifdef ECS_IOCTL_APP_SET_MVFLAG
     if (!ioctl(fd, ECS_IOCTL_APP_GET_MVFLAG, &flags)) {
         if (flags)  sensors |= SENSORS_MAGNETIC_FIELD;
         else        sensors &= ~SENSORS_MAGNETIC_FIELD;
     }
 #endif
-	sensors |= SENSORS_PROXIMITY;
+
+	sensors |= SENSORS_LIGHT;
 
     return sensors;
 }
