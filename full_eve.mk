@@ -22,6 +22,7 @@ PRODUCT_PACKAGES += \
     VoiceDialer \
     FM \
     LiveWallpapersPicker \
+	OpenEtna \
     sensors.eve \
 	lights.eve \
 	Torch
